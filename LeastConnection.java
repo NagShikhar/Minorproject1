@@ -1,6 +1,7 @@
 package nag;
 
 import java.util.List;
+
 import java.util.concurrent.locks.ReentrantLock;
 
 public class LeastConnection extends LoadBalancer {
@@ -23,7 +24,7 @@ public class LeastConnection extends LoadBalancer {
 		mylock.lock();
 		
 		try {
-			int totalLoad = 0;
+			float totalLoad = 0;
 			
 		    for(int i = 0 ; i < requests ; i++) {
 		        loadOnServers[i % 3] += bursttime[i];
@@ -37,12 +38,13 @@ public class LeastConnection extends LoadBalancer {
 		    
 		    for(int i = 0 ; i < 3 ; i++) {
 		        int currLoad = (loadOnServers[i] / requestsOnServer[i]);
-		        System.out.println("Average Load on Server : " + (i + 1) + " is " + currLoad);
-		        System.out.println("Total Load on Server : " + (i + 1) + " is " + loadOnServers[i]);
+		        System.out.println("Average  Response Time on Server: " + (i + 1) + " is " + currLoad);
+		        System.out.println("Total Response  Time on Server: " + (i + 1) + " is " + loadOnServers[i]);
 		        loadOnServers[i] = 0;
+		        
 		        requestsOnServer[i] = 0;
 		    }
-		    System.out.println("\n Total Average Load on a cluster (group of servers) is : " + (totalLoad / requests));
+		    System.out.println("\n Total Average Response Time  of request : " + (totalLoad / requests));
 		}
 		
 		finally {
