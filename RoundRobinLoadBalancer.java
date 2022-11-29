@@ -10,8 +10,8 @@ public class RoundRobinLoadBalancer extends LoadBalancer {
 	private final ReentrantLock mylock;
 	int[] bursttime ;
 	int requests  ;
-
-	int Quantum = 2;
+//Threshhold quantum = 16; min =2 mid =8
+	int Quantum = 2 ;
 	int wait[];
 	int totalTime[];
 	int []oldBurstTime;
@@ -105,15 +105,15 @@ public class RoundRobinLoadBalancer extends LoadBalancer {
 				
 				timeOnServer[i % 3] +=  totalTime[i];
 				
-				System.out.println("p" + (i + 1) + "\t\t\t" + wait[i] + "\t\t\t\t\t" + totalTime[i]);
+				System.out.println("R" + (i + 1) + "\t\t\t" + wait[i] + "\t\t\t\t\t" + totalTime[i]);
 			}
 
 			System.out.println("Average waiting time is: " + (total_wait / requests));
 			System.out.println("Average Total time is: " + (total_time / requests));
 			
 			for(int i = 0 ; i < 3 ; i++) {
-		        System.out.println("Total Time on Server : " + (i + 1) + " is " + timeOnServer[i]);
-		        System.out.println("Average Time on Server : " + (i + 1) + " is " + (timeOnServer[i] / requestsOnServer[i]));
+		        System.out.println("Total Response  Time on Server : " + (i + 1) + " is " + timeOnServer[i]);
+		        System.out.println("Average  Response Time on Server : " + (i + 1) + " is " + (timeOnServer[i] / requestsOnServer[i]));
 			    timeOnServer[i]= 0;
 			    requestsOnServer[i] = 0;
 		    }
